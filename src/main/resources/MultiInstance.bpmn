@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_15tneg9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Process_1fbfm4a" name="Multiple Instances" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_1qh9wio</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1qh9wio" sourceRef="StartEvent_1" targetRef="Activity_1bx9sdc" />
+    <bpmn:sequenceFlow id="Flow_01181cl" sourceRef="Activity_1bx9sdc" targetRef="MultiInstanceUI" />
+    <bpmn:endEvent id="Event_0f37ibt" name="End">
+      <bpmn:incoming>Flow_1bi3rml</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1bi3rml" sourceRef="MultiInstanceUI" targetRef="Event_0f37ibt" />
+    <bpmn:userTask id="MultiInstanceUI" name="Multi Instance UI ${loopCounter}" camunda:assignee="${assignee}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="hello" label="hello" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_01181cl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bi3rml</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="assigneeList" camunda:elementVariable="assignee">
+        <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">${nrOfCompletedInstances/nrOfInstances &gt;= 0.6}</bpmn:completionCondition>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_1bx9sdc" name="Generate Assignees" scriptFormat="javascript">
+      <bpmn:incoming>Flow_1qh9wio</bpmn:incoming>
+      <bpmn:outgoing>Flow_01181cl</bpmn:outgoing>
+      <bpmn:script>const assigneeList = ["demo", "jhon", "mary"];
+execution.setVariable("assigneeList", assigneeList);
+</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1fbfm4a">
+      <bpmndi:BPMNEdge id="Flow_1qh9wio_di" bpmnElement="Flow_1qh9wio">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01181cl_di" bpmnElement="Flow_01181cl">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="429" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bi3rml_di" bpmnElement="Flow_1bi3rml">
+        <di:waypoint x="529" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="185" y="142" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0f37ibt_di" bpmnElement="Event_0f37ibt">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="600" y="142" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08jffia_di" bpmnElement="Activity_1bx9sdc">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d5zizc_di" bpmnElement="MultiInstanceUI">
+        <dc:Bounds x="429" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

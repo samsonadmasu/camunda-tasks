@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0ve6ebk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="userTask" name="User Task Process" isExecutable="true" camunda:historyTimeToLive="P1D">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_08lvbdt</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_08lvbdt" sourceRef="StartEvent_1" targetRef="Activity_0kqd91y" />
+    <bpmn:sequenceFlow id="Flow_1t3ukc6" sourceRef="Activity_0kqd91y" targetRef="Activity_06vu50j" />
+    <bpmn:endEvent id="Event_1s8atqr">
+      <bpmn:incoming>Flow_0i67l3i</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0i67l3i" sourceRef="Activity_06vu50j" targetRef="Event_1s8atqr" />
+    <bpmn:scriptTask id="Activity_06vu50j" name="Display" scriptFormat="javascript">
+      <bpmn:incoming>Flow_1t3ukc6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0i67l3i</bpmn:outgoing>
+      <bpmn:script>print("Display Name is : " + execution.getVariable("name"));</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Activity_0kqd91y" name="Enter Name" camunda:formRef="userTaskForm" camunda:formRefBinding="deployment" camunda:assignee="root" camunda:candidateUsers="root" camunda:candidateGroups="camunda-admin" camunda:priority="2">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">print("start of execution listener");</camunda:script>
+          <camunda:field name="">
+            <camunda:string></camunda:string>
+          </camunda:field>
+        </camunda:executionListener>
+        <camunda:taskListener event="create">
+          <camunda:script scriptFormat="javascript">print("task is created listener");</camunda:script>
+        </camunda:taskListener>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="javascript">print("after execution of the task"); </camunda:script>
+        </camunda:executionListener>
+        <camunda:taskListener event="complete">
+          <camunda:script scriptFormat="javascript">print("task is completed listener");</camunda:script>
+        </camunda:taskListener>
+        <camunda:taskListener event="assignment">
+          <camunda:script scriptFormat="javascript">print("assignment task listener");</camunda:script>
+        </camunda:taskListener>
+        <camunda:formData>
+          <camunda:formField id="name" label="Name" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08lvbdt</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t3ukc6</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="userTask">
+      <bpmndi:BPMNEdge id="Flow_08lvbdt_di" bpmnElement="Flow_08lvbdt">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="270" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t3ukc6_di" bpmnElement="Flow_1t3ukc6">
+        <di:waypoint x="370" y="97" />
+        <di:waypoint x="430" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i67l3i_di" bpmnElement="Flow_0i67l3i">
+        <di:waypoint x="530" y="97" />
+        <di:waypoint x="592" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1s8atqr_di" bpmnElement="Event_1s8atqr">
+        <dc:Bounds x="592" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sfq6pk_di" bpmnElement="Activity_06vu50j">
+        <dc:Bounds x="430" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iym4y7_di" bpmnElement="Activity_0kqd91y">
+        <dc:Bounds x="270" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

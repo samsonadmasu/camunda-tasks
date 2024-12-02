@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_14b2icf" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <decision id="getClass" name="GetClass">
+    <decisionTable id="DecisionTable_0uc387p" hitPolicy="FIRST">
+      <input id="Input_1" label="Marks">
+        <inputExpression id="InputExpression_1" typeRef="integer" expressionLanguage="javascript">
+          <text>marks</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="class" name="class" typeRef="string" />
+      <output id="OutputClause_0egn2zx" label="stream" name="stream" typeRef="string" />
+      <rule id="DecisionRule_0llc8vt">
+        <inputEntry id="UnaryTests_17778wx">
+          <text>&lt; 36</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0y5gtxy">
+          <text>"Failed"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0wtzmer">
+          <text>"Reappear"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1p5scip">
+        <inputEntry id="UnaryTests_1nnpzhj">
+          <text>[36..59]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_094t2zr">
+          <text>"Second"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0c5d67e">
+          <text>"Commerce"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1oe6jno">
+        <inputEntry id="UnaryTests_1we5egs">
+          <text>[60..79]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rqcirw">
+          <text>"First"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0wo708n">
+          <text>"Science"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_08izpj2">
+        <inputEntry id="UnaryTests_1muuxz0">
+          <text>&gt;= 80</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1btsamf">
+          <text>"Distinction"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dqzzl3">
+          <text>"Science"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="getClass">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
